@@ -33,4 +33,9 @@ router.getPatients = (req, res) => {
     });
 };
 
+router.upload = (req, res) => {
+  console.log(req.file);
+  res.send();
+};
+
 module.exports = router;

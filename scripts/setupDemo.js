@@ -8,7 +8,7 @@
 const mongoose = require('mongoose');
 const DateOnly = require('mongoose-dateonly')(mongoose);
 
-mongoose.connect('mongodb://localhost/pharmagree');
+mongoose.connect('mongodb://heroku_b4dqpvhv:kd1cn5b4q6odbi7fan7t86sr7v@ds145405.mlab.com:45405/heroku_b4dqpvhv' || 'mongodb://localhost/pharmagree');
 mongoose.connection.on('error', (err) => {
   if (err) {
     console.log(err);

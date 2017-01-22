@@ -6,6 +6,10 @@
   /*font-size: 10px;*/
 }
 
+body {
+  padding: 0;
+}
+
 .week-view {
   display: flex;
   justify-content: space-around;
@@ -13,7 +17,14 @@
 
 .medication-view {
   position: fixed;
-  bottom: 0;
+  bottom: 0%;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+  height: 40px;
+}
+
+.dropzone.dz-clickable {
+  background-color: #eee;
+  border-radius: 10px;
+  margin: 10px;
 }

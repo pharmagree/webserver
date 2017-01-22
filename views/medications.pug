@@ -1,9 +1,13 @@
 extends layout
 
 block styles
+  link(rel='stylesheet', href='https://rawgit.com/enyo/dropzone/master/dist/dropzone.css')
   link(rel='stylesheet', href='/stylesheets/medications.css')
 
 block content
+
+  form#my-awesome-dropzone.dropzone(action='/api/upload')
+
   .medication-view
     .week-view.ui.fluid
       button.circular.ui.icon.button.inverted.red
@@ -26,3 +30,6 @@ block content
 
       button.circular.ui.icon.button.inverted.red
         p Su
+
+block scripts
+  script(src='https://rawgit.com/enyo/dropzone/master/dist/dropzone.js')

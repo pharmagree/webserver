@@ -8,6 +8,17 @@ const passport = require('passport');
 const session = require('express-session');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 const flash = require('connect-flash');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename(req, file, cb) {
+    cb(null, `${file.fieldname}-${Date.now()}.mov`);
+  }
+});
+const upload = multer({
+  storage
+});
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/pharmagree');
 mongoose.connection.on('error', (err) => {
@@ -81,6 +92,8 @@ app.post('/api/login', passport.authenticate('local-login', {
   failureFlash: true,
 }));
 app.post('/api/logout', api.postLogout);
+
+app.post('/api/upload', upload.single('file'), api.upload);
 
 // Doctor Panel API Endpoints
 app.get('/api/patients', api.getPatients);
