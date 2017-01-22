@@ -4,6 +4,10 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const session = require('express-session');
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+const flash = require('connect-flash');
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/pharmagree');
 mongoose.connection.on('error', (err) => {
@@ -11,8 +15,8 @@ mongoose.connection.on('error', (err) => {
   process.exit(1);
 });
 
-const index = require('./routes/index');
-const users = require('./routes/users');
+const views = require('./routes/views');
+const api = require('./routes/api');
 
 const app = express();
 
@@ -28,8 +32,55 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+const MongoStore = require('connect-mongo')(session);
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+  }),
+  resave: false,
+  saveUninitialized: true,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+// Pass the user data to our Jade templates
+app.use((req, res, next) => {
+  const u = req.user;
+  if (u) {
+    delete u.hash;
+  }
+
+  res.locals.user = u;
+  return next();
+});
+
+// pass passport for configuration
+require('./config/passport.js')(passport);
+
+// middleware to redirect the user to the dashboard if they already logged in
+function isNotLoggedIn(req, res, next) {
+  return (req.isAuthenticated() ? res.redirect('/') : next());
+}
+
+// Require that the user is not signed in
+app.get('/login', isNotLoggedIn, views.login);
+
+// Require that the user is signed in
+app.get('/', ensureLoggedIn('/login'), views.index); // Redirects to /patients or /medications
+app.get('/patients', ensureLoggedIn('/login'), views.patients);
+app.get('/medications', ensureLoggedIn('/login'), views.medications);
+
+// API methods
+app.post('/api/login', passport.authenticate('local-login', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true,
+}));
+app.post('/api/logout', api.postLogout);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -7,7 +7,7 @@ const medSchema = new Schema({
   metadata: {
     name: { type: String, required: true },
     dailyAmount: { type: Number, required: true },
-    dailyUnit: { type: String, required: true }
+    unit: { type: String, required: true }
   },
   data: [
     {
