@@ -1,5 +1,28 @@
 extends layout
 
+block styles
+  link(rel='stylesheet', href='/stylesheets/medications.css')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  .medication-view
+    .week-view.ui.fluid
+      button.circular.ui.icon.button.inverted.red
+        p M
+
+      button.circular.ui.icon.button.inverted.red
+        p Tu
+
+      button.circular.ui.icon.button.inverted.red
+        p W
+
+      button.circular.ui.icon.button.inverted.red
+        p Th
+
+      button.circular.ui.icon.button.inverted.red
+        p F
+
+      button.circular.ui.icon.button.inverted.red
+        p Sa
+
+      button.circular.ui.icon.button.inverted.red
+        p Su

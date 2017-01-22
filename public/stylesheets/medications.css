@@ -1,0 +1,19 @@
+.circular {
+  width: 3em;
+}
+
+.circular p {
+  /*font-size: 10px;*/
+}
+
+.week-view {
+  display: flex;
+  justify-content: space-around;
+}
+
+.medication-view {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 15px;
+}
