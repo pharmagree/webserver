@@ -3,6 +3,13 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/pharmagree');
+mongoose.connection.on('error', (err) => {
+  console.log(err);
+  process.exit(1);
+});
 
 const index = require('./routes/index');
 const users = require('./routes/users');
