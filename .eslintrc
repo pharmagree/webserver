@@ -10,5 +10,9 @@
     "comma-dangle": "off",
     "no-shadow": [2, {"allow": ["err"]}],
     "no-param-reassign": ["error", { "props": false }]
+  },
+  "globals": {
+    "$": true,
+    "window": true
   }
 }

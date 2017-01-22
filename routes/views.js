@@ -16,7 +16,7 @@ router.login = (req, res) => {
   res.render('login', {
     title: 'Login',
     messages: req.flash('loginFlash'),
-    hideLogout: true,
+    hideNav: true,
     submission: sub,
   });
 };
@@ -25,7 +25,7 @@ router.patients = (req, res) => {
   res.render('patients', {
     title: 'Patients',
     messages: req.flash('patientsFlash'),
-    hideLogout: false,
+    hideNav: false,
   });
 };
 
@@ -33,7 +33,7 @@ router.medications = (req, res) => {
   res.render('medications', {
     title: 'Medications',
     messages: req.flash('medicationsFlash'),
-    hideLogout: false,
+    hideNav: false,
   });
 };
 
