@@ -1,9 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var patientSchema = new Schema({
-	name: {type: String, required: true},
-	medications: [Schema.Types.ObjectId] 
-})
+const Schema = mongoose.Schema;
+
+const patientSchema = new Schema({
+  name: { type: String, required: true },
+  medications: [Schema.Types.ObjectId]
+});
 
 module.exports('patient', patientSchema);
