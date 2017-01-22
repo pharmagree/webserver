@@ -82,6 +82,9 @@ app.post('/api/login', passport.authenticate('local-login', {
 }));
 app.post('/api/logout', api.postLogout);
 
+// Doctor Panel API Endpoints
+app.get('/api/patients', api.getPatients);
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');

@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -14,6 +16,21 @@ router.postLogout = (req, res) => {
     class: 'success',
   });
   sendJSON(res, { redirect: '/login' });
+};
+
+router.getPatients = (req, res) => {
+  User
+    .find({
+      type: 'patient'
+    })
+    .sort({ name: 1 })
+    .exec((err, response) => {
+      if (err) {
+        console.err(err);
+      }
+      console.log(response);
+      sendJSON(res, response);
+    });
 };
 
 module.exports = router;
